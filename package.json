@@ -1,0 +1,48 @@
+{
+  "name": "eslint-path-formatter",
+  "version": "0.0.1",
+  "description": "ESLint formatter with source-map support and displays absolute paths with row/column on one line.",
+  "author": {
+    "name": "Bart van der Schoor",
+    "url": "https://github.com/Bartvds"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bartvds/eslint-path-formatter.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Bartvds/eslint-path-formatter/blob/master/LICENSE-MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/Bartvds/eslint-path-formatter/issues"
+  },
+  "keywords": [
+    "eslint",
+    "formatter",
+    "source-map"
+  ],
+  "main": "lib/index.js",
+  "readmeFilename": "README.md",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "jshint-path-reporter": "~0.1.2",
+    "vows": "~0.7.0",
+    "eslint": "git://github.com/nzakas/eslint/#15ecd64a872242f8449f08114ef7f7365b415269",
+    "sinon": "~1.7.3",
+    "grunt-vows-runner": "~0.6.0"
+  },
+  "dependencies": {
+    "source-map": "~0.1.27"
+  }
+}
