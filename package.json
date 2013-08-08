@@ -1,7 +1,7 @@
 {
   "name": "eslint-path-formatter",
-  "version": "0.0.1",
-  "description": "ESLint formatter with source-map support and displays absolute paths with row/column on one line.",
+  "version": "0.1.0",
+  "description": "ESLint formatter with source-map support and absolute paths with row/column on one line.",
   "author": {
     "name": "Bart van der Schoor",
     "url": "https://github.com/Bartvds"
@@ -40,7 +40,9 @@
     "vows": "~0.7.0",
     "eslint": "git://github.com/nzakas/eslint/#15ecd64a872242f8449f08114ef7f7365b415269",
     "sinon": "~1.7.3",
-    "grunt-vows-runner": "~0.6.0"
+    "grunt-vows-runner": "~0.6.0",
+    "grunt-shell": "~0.3.1",
+    "eslint-grunt": "0.0.4"
   },
   "dependencies": {
     "source-map": "~0.1.27"

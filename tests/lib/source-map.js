@@ -13,6 +13,8 @@ var vows = require("vows"),
 	path = require("path"),
 	cli = require("eslint").cli;
 
+require('../../index.js').color(false);
+
 //------------------------------------------------------------------------------
 // Constants
 //------------------------------------------------------------------------------
@@ -43,12 +45,21 @@ var captureLog = function () {
 
 var pathSeperator = path.sep ? path.sep : (process.platform === "win32" ? "\\" : "/");
 
+var escape = function(str) {
+	str = str.replace(/ /g, '/s');
+	str = str.replace(/\t/g, '\\t');
+	str = str.replace(/\r/g, '\\r');
+	return str;
+};
+
 var runCliTest = function (commandArray, expectedExitCode, expectedOutput){
 
 	var getLog = captureLog();
 	var exitCode = cli.execute(commandArray);
 	var buffer = getLog();
 
+	buffer = "[" + escape(buffer) + "]";
+	expectedOutput = "[" + escape(expectedOutput) + "]";
 	assert.strictEqual(buffer, expectedOutput);
 	assert.strictEqual(exitCode, expectedExitCode);
 };

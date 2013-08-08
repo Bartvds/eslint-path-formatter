@@ -1,23 +1,51 @@
-/**
- * @fileoverview Path reporter
- * @author Bart van der Schoor
- */
+var fs = require('fs');
+var path = require('path');
+var SourceMapConsumer = require('source-map').SourceMapConsumer;
 
-/* jshint node:true */
+var options = {style: 'ansi'};
+// copied colors from color.js
+var colorWrap = {
+	//grayscale
+	'white': ['\033[37m', '\033[39m'],
+	'grey': ['\033[90m', '\033[39m'],
+	'black': ['\033[30m', '\033[39m'],
+	//colors
+	'blue': ['\033[34m', '\033[39m'],
+	'cyan': ['\033[36m', '\033[39m'],
+	'green': ['\033[32m', '\033[39m'],
+	'magenta': ['\033[35m', '\033[39m'],
+	'red': ['\033[31m', '\033[39m'],
+	'yellow': ['\033[33m', '\033[39m']
+};
+var wrapStyle = function (str, color) {
+	str = '' + str;
+	if (options.style === 'ansi' && colorWrap.hasOwnProperty(color)) {
+		var arr = colorWrap[color];
+		return arr[0] + str + arr[1];
+	}
+	return str;
+};
+/* jshint -W098 */
+var warn = function (str) {
+	return wrapStyle(str, 'yellow');
+};
+var fail = function (str) {
+	return wrapStyle(str, 'red');
+};
+var ok = function (str) {
+	return wrapStyle(str, 'green');
+};
+var accent = function (str) {
+	return wrapStyle(str, 'white');
+};
 
 function getMessageType(message, rules) {
-
 	if (message.fatal || rules[message.ruleId] === 2) {
 		return "Error";
 	} else {
 		return "Warning";
 	}
-
 }
-
-var fs = require('fs');
-var path = require('path');
-var SourceMapConsumer = require("source-map").SourceMapConsumer;
 
 // based on https://github.com/evanw/node-source-map-support
 var cache = {};
@@ -54,11 +82,10 @@ function mapSourcePosition(position) {
 			url: sourceMappingURL,
 			base64: base64
 		};
-		cache[position.source] = sourceMap;
-
 		if (sourceMapData) {
 			sourceMap.map = new SourceMapConsumer(sourceMapData);
 		}
+		cache[position.source] = sourceMap;
 	}
 
 	// Resolve the source URL relative to the URL of the source map
@@ -85,40 +112,106 @@ function mapSourcePosition(position) {
 }
 
 module.exports = function (results, config) {
-	var output = ""
-		, total = 0
-		, rules = config.rules || {}
-		//, path = require("path")
-		, dataUrlPrefix = "data:application/json;base64,";
+	var fileCount = results.length;
+	var errorCount = 0;
+	var i = 0;
+	var rules = config.rules || {};
+	var path = require("path");
+	var dataUrlPrefix = "data:application/json;base64,";
 
-	results.forEach(function (result, index) {
-
-		var messages = result.messages;
-		total += messages.length;
-
-		if (index > 0) {
-			output += "\n";
+	var buffer = [];
+	var writeln = function (str) {
+		if (arguments.length === 0) {
+			str = '';
 		}
-		output += ">> " + result.filePath + "\n";
+		buffer.push(str);
+	};
 
-		messages.forEach(function (message) {
+	results.forEach(function (res) {
+		i++;
+		//console.dir(res);
+		var head = '';
+		var file;
+		if (res.filePath) {
+			file = path.resolve(res.filePath);
+			head = res.filePath;
+		}
+		if (!file) {
+			file = '<unknown file>';
+			head = file;
+		}
+		if (!res.messages || res.messages.length === 0) {
+			//writeln(ok('>> ') + head + ' ' + ok('OK') + (i === fileCount ? '\n' : ''));
+		} else {
+			writeln(fail('>> ') + head);// + ' ' + fail(errors.length + ' error' + (errors.length == 1 ? '' : 's')));
+			errorCount += res.messages.length;
+			res.messages.sort(function (a, b) {
+				if (a && !b) {
+					return -1;
+				}
+				else if (!a && b) {
+					return 1;
+				}
+				if (a.line < b.line) {
+					return -1;
+				}
+				else if (a.line > b.line) {
+					return 1;
+				}
+				if (a.column < b.column) {
+					return -1;
+				}
+				else if (a.column > b.column) {
+					return 1;
+				}
+				return 0;
+			});
 
-			var position = mapSourcePosition({source: result.filePath, line: message.line, column: message.column});
+			res.messages.forEach(function (message) {
+				var str = '';
 
-			output += getMessageType(message, rules).toLocaleUpperCase() + " at ";
-			if (position.source.slice(0, dataUrlPrefix.length).toLowerCase() === dataUrlPrefix) {
-				output += position.source;
-			}
-			else {
-				output += path.resolve(position.source);
-			}
-			output += "[" + position.line + "," + position.column + "]";
-			output += "\n[" + message.ruleId + "] " + message.message + "\n";
-		});
+				var position = mapSourcePosition({source:file, line:message.line, column: message.column});
 
+				str += fail(getMessageType(message, rules).toLocaleUpperCase()) + ' at ';
+				if (position.source.slice(0, dataUrlPrefix.length).toLowerCase() === dataUrlPrefix) {
+					str += position.source;
+				}
+				else {
+					str += path.resolve(position.source);
+				}
+				if (typeof position.column !== 'undefined') {
+					str += '(' + position.line + ',' + position.column + '):';
+				}
+				if (typeof message.ruleId !== 'undefined') {
+					str += '\n' + warn('[' +  message.ruleId + '] ');
+				}
+				else {
+					str += '\n';
+				}
+				str += warn(message.message ? message.message : '<undefined message>');
+				/*if (typeof message.evidence !== 'undefined') {
+					str += '\n' + message.evidence;
+				}*/
+				writeln(str);
+			});
+			writeln('');
+		}
 	});
+	var report = 'ESLint found ';
+	var fileReport = fileCount + ' file' + (fileCount === 1 ? '' : 's');
+	if (fileCount === 0) {
+		fileReport = warn(fileReport);
+	}
+	if (errorCount === 0) {
+		writeln(report + ok('no problems') + ' in ' + fileReport);
+	}
+	else {
+		writeln(report + fail(errorCount + ' problem' + ((errorCount === 1) ? '' : 's')) + ' in ' + fileReport);
+	}
+	return buffer.join('\n');
+};
 
-	output += "\n" + total + " " + (total === 1 ? "problem" : "problems");
-
-	return output;
+module.exports.options = options;
+module.exports.color = function (enable) {
+	options.style = enable ? 'ansi' : false;
 };

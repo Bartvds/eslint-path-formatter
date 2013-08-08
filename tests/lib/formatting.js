@@ -14,6 +14,8 @@ var vows = require("vows"),
 	path = require("path"),
 	formatter = require("../../index");
 
+formatter.color(false);
+
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -27,7 +29,6 @@ vows.describe("formatting").addBatch({
 				filePath: "foo.js",
 				messages: [
 					{
-						filePath: "foo.js",
 						message: "Unexpected foo.",
 						line: 5,
 						column: 10,
@@ -43,7 +44,7 @@ vows.describe("formatting").addBatch({
 			};
 
 			var result = formatter(topic, config);
-			assert.equal(">> foo.js\nERROR at " + path.resolve("foo.js") + "[5,10]\n[foo] Unexpected foo.\n\n1 problem", result);
+			assert.strictEqual(">> foo.js\nERROR at " + path.resolve("foo.js") + "(5,10):\n[foo] Unexpected foo.\n\nESLint found 1 problem in 1 file", result);
 		},
 
 		"should return a string in the format WARNING at filePath[line,col]\\n[ruleId] message": function (topic) {
@@ -52,7 +53,7 @@ vows.describe("formatting").addBatch({
 			};
 
 			var result = formatter(topic, config);
-			assert.equal(">> foo.js\nWARNING at " + path.resolve("foo.js") + "[5,10]\n[foo] Unexpected foo.\n\n1 problem", result);
+			assert.strictEqual(">> foo.js\nWARNING at " + path.resolve("foo.js") + "(5,10):\n[foo] Unexpected foo.\n\nESLint found 1 problem in 1 file", result);
 		}
 
 	},
@@ -64,7 +65,6 @@ vows.describe("formatting").addBatch({
 				filePath: "foo.js",
 				messages: [
 					{
-						filePath: "foo.js",
 						fatal: true,
 						message: "Unexpected foo.",
 						line: 5,
@@ -79,7 +79,7 @@ vows.describe("formatting").addBatch({
 			var config = {};    // doesn't matter what's in the config for this test
 
 			var result = formatter(topic, config);
-			assert.equal(">> foo.js\nERROR at " + path.resolve("foo.js") + "[5,10]\n[foo] Unexpected foo.\n\n1 problem", result);
+			assert.strictEqual(">> foo.js\nERROR at " + path.resolve("foo.js") + "(5,10):\n[foo] Unexpected foo.\n\nESLint found 1 problem in 1 file", result);
 		}
 	},
 
@@ -90,7 +90,6 @@ vows.describe("formatting").addBatch({
 				messages: [
 					{
 						message: "Unexpected foo.",
-						filePath: "path/to/foo.js",
 						line: 5,
 						column: 10,
 						ruleId: "foo"
@@ -102,7 +101,6 @@ vows.describe("formatting").addBatch({
 				messages: [
 					{
 						message: "Unexpected bar.",
-						filePath: "path/for/bar.js",
 						line: 6,
 						column: 11,
 						ruleId: "bar"
@@ -120,11 +118,10 @@ vows.describe("formatting").addBatch({
 
 			var foo = 'path/to/foo.js';
 			var bar = 'path/for/bar.js';
-			var expected = ">> " + foo + "\nERROR at " + path.resolve(foo) + "[5,10]\n[foo] Unexpected foo."
-			expected += "\n\n>> " + bar + "\nWARNING at " + path.resolve(bar) + "[6,11]\n[bar] Unexpected bar.\n\n2 problems"
+			var expected = ">> " + foo + "\nERROR at " + path.resolve(foo) + "(5,10):\n[foo] Unexpected foo."
+			expected += "\n\n>> " + bar + "\nWARNING at " + path.resolve(bar) + "(6,11):\n[bar] Unexpected bar.\n\nESLint found 2 problems in 2 files"
 
-			assert.equal(expected, result);
-			assert.equal(expected.length, result.length);
+			assert.strictEqual(expected, result);
 		}
 
 	}
