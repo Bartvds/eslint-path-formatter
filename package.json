@@ -39,9 +39,7 @@
     "jshint-path-reporter": "~0.1.2",
     "vows": "~0.7.0",
     "eslint": "git://github.com/nzakas/eslint/#15ecd64a872242f8449f08114ef7f7365b415269",
-    "sinon": "~1.7.3",
     "grunt-vows-runner": "~0.6.0",
-    "grunt-shell": "~0.3.1",
     "eslint-grunt": "0.0.4"
   },
   "dependencies": {
