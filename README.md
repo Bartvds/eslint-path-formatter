@@ -14,7 +14,7 @@ There is support for [source-map's](https://github.com/mozilla/source-map); if a
 
 ### WebStorm
 
-This reporter is tested and actively used in WebStorm with [eslint-grunt](https://github.com/gruntjs/grunt-contrib-jshint). For maximum effect have a output filter configured in its [edit-tool-dialog](https://www.jetbrains.com/webstorm/webhelp/edit-tool-dialog.html) of the tool you run, something like:
+This reporter is tested and actively used in WebStorm with [eslint-grunt](https://github.com/iancmyers/eslint-grunt). For maximum effect have a output filter configured in its [edit-tool-dialog](https://www.jetbrains.com/webstorm/webhelp/edit-tool-dialog.html) of the tool you run, something like:
 
 ````
 $FILE_PATH$[ \t]*[:;,\[\(\{<]$LINE$(?:[:;,\.]$COLUMN$)?.*
