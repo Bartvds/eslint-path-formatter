@@ -2,15 +2,17 @@
 
 [![Build Status](https://secure.travis-ci.org/Bartvds/eslint-path-formatter.png?branch=master)](http://travis-ci.org/Bartvds/eslint-path-formatter) [![Dependency Status](https://gemnasium.com/Bartvds/eslint-path-formatter.png)](https://gemnasium.com/Bartvds/eslint-path-formatter) [![NPM version](https://badge.fury.io/js/eslint-path-formatter.png)](http://badge.fury.io/js/eslint-path-formatter)
 
-> ESLint reporter that displays absolute error path with row/column on one line.
+> ESLint formatter that displays absolute error path with row/column on one line.
 
-A console reporter cloned from [jshint-path-reporter](https://github.com/Bartvds/jshint-path-reporter) that is similar to the default output from JSHint, except the report displays absolute file paths with the row/column appended in a parsable format.
+:warning: This is a pre-release version that depends on code that yet has to land in the ESLint release.
+
+A console formatter cloned from [jshint-path-reporter](https://github.com/Bartvds/jshint-path-reporter) that is similar to the default output from JSHint, except the report displays absolute file paths with the row/column appended in a parsable format.
 
 This allows convenient use of [ESLint](https://github.com/nzakas/eslint) from within tools that apply a filter RegExp to console views to turn error lines into clickable links to instantly navigate to the error location.
 
 ### Source-map
 
-There is support for [source-map's](https://github.com/mozilla/source-map); if a `//@ sourceMappingURL` is found the reported error position is mapped to the original source file. This works great with output from compilers like [TypeScript](http://www.typescriptlang.org/) or build tools like [grunt-concat-sourcemap](https://github.com/kozy4324/grunt-concat-sourcemap).
+There is support for [source-maps](https://github.com/mozilla/source-map); if a `//@ sourceMappingURL` is found the reported error position is mapped to the original source file. This works great with output from compilers like [TypeScript](http://www.typescriptlang.org/) or build tools like [grunt-concat-sourcemap](https://github.com/kozy4324/grunt-concat-sourcemap).
 
 ### WebStorm
 
@@ -45,13 +47,6 @@ grunt.initConfig({
 });
 ````
 
-## Example output
-
-> Looks very similar to [jshint-path-reporter](https://github.com/Bartvds/jshint-path-reporter):
->  
-> WebStorm (with link filter and darcula theme):
-> ![webstorm darcula](https://raw.github.com/Bartvds/jshint-path-reporter/master/media/example_output_webstorm.png)
-
 ## Options
 
 ### Globally disable ANSI colouring
@@ -61,6 +56,14 @@ For low-tech displays and pure text.
 ````js
 require('eslint-path-formatter').color(false);
 ````
+
+## Example output
+
+> Looks very similar to [jshint-path-reporter](https://github.com/Bartvds/jshint-path-reporter):
+>  
+> WebStorm (with link filter and darcula theme):
+> ![webstorm darcula](https://raw.github.com/Bartvds/jshint-path-reporter/master/media/example_output_webstorm.png)
+
 ## History
 
 * 0.1.0 - Cloned from [jshint-path-reporter](https://github.com/Bartvds/jshint-path-reporter)

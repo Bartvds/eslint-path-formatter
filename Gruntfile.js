@@ -3,7 +3,6 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-vows-runner');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('eslint-grunt');
 
 	grunt.initConfig({
