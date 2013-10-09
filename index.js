@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var SourceMapConsumer = require('source-map').SourceMapConsumer;
 
-var options = {style: 'ansi'};
+var options = {style: 'ansi', sourcemap:true};
 // copied colors from color.js
 var colorWrap = {
 	//grayscale
@@ -127,6 +127,13 @@ module.exports = function (results, config) {
 		buffer.push(str);
 	};
 
+	var mapSource = mapSourcePosition;
+	if (!options.sourcemap){
+		mapSource = function (position) {
+			return position;
+		};
+	}
+
 	results.forEach(function (res) {
 		i++;
 		//console.dir(res);
@@ -170,7 +177,7 @@ module.exports = function (results, config) {
 			res.messages.forEach(function (message) {
 				var str = '';
 
-				var position = mapSourcePosition({source:file, line:message.line, column: message.column});
+				var position = mapSource({source:file, line:message.line, column: message.column});
 
 				str += fail(getMessageType(message, rules).toLocaleUpperCase()) + ' at ';
 				if (position.source.slice(0, dataUrlPrefix.length).toLowerCase() === dataUrlPrefix) {

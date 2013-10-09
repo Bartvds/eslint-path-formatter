@@ -1,4 +1,4 @@
->> tests/fixtures/source-map-coffee/main-dataurl.js
+>> test/fixtures/source-map-coffee/main-dataurl.js
 WARNING at data:application/json;base64,main.coffee(1,9):
 [eqeqeq] Expected '===' and instead saw '=='.
 WARNING at data:application/json;base64,main.coffee(2,2):

@@ -1,0 +1,4 @@
+*.txt		text eol=lf
+*.js		text eol=lf
+*.coffee	text eol=lf
+*.ts		text eol=lf

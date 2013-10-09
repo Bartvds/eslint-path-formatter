@@ -1,4 +1,4 @@
->> tests/fixtures/source-map-coffee/main-fileurl.js
+>> test/fixtures/source-map-relative/main.js
 WARNING at $_PATH_$main.coffee(1,9):
 [eqeqeq] Expected '===' and instead saw '=='.
 WARNING at $_PATH_$main.coffee(2,2):

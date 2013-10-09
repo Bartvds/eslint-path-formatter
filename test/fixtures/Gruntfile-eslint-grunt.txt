@@ -1,0 +1,13 @@
+Running "eslint:eslint_grunt" (eslint) task
+>> fixtures/basic/invalid-a.js
+ERROR at {{full}}invalid-a.js(1,0):
+[no-eval] eval can be harmful.
+
+>> fixtures/basic/invalid-b.js
+ERROR at {{full}}invalid-b.js(1,0):
+[no-console] Unexpected console statement.
+
+ESLint found 2 problems in 2 files
+Warning: Task "eslint:eslint_grunt" failed. Use --force to continue.
+
+Aborted due to warnings.

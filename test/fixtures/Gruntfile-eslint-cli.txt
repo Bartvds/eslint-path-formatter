@@ -1,0 +1,14 @@
+Running "shell:eslint" (shell) task
+>> fixtures/basic/invalid-a.js
+ERROR at {{full}}invalid-a.js(1,0):
+[no-eval] eval can be harmful.
+
+>> fixtures/basic/invalid-b.js
+ERROR at {{full}}invalid-b.js(1,0):
+[no-undef] 'console' is not defined.
+ERROR at {{full}}invalid-b.js(1,0):
+[no-console] Unexpected console statement.
+
+ESLint found 3 problems in 2 files
+
+Done, without errors.

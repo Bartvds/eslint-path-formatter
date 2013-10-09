@@ -1,0 +1,9 @@
+{
+	"rules": {
+		"eqeqeq": 1,
+		"no-console": 1,
+		"no-wrap-func": 0,
+		"no-undef": 0,
+		"no-shadow": 0
+	}
+}
