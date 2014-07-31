@@ -39,8 +39,8 @@ var accent = function (str) {
 	return wrapStyle(str, 'white');
 };
 
-function getMessageType(message, rules) {
-	if (message.fatal || rules[message.ruleId] === 2) {
+function getMessageType(message) {
+	if (message.fatal || message.severity === 2) {
 		return "Error";
 	} else {
 		return "Warning";
@@ -111,11 +111,10 @@ function mapSourcePosition(position) {
 	return position;
 }
 
-module.exports = function (results, config) {
+module.exports = function (results) {
 	var fileCount = results.length;
 	var errorCount = 0;
 	var i = 0;
-	var rules = config.rules || {};
 	var path = require("path");
 	var dataUrlPrefix = "data:application/json;base64,";
 
@@ -179,7 +178,7 @@ module.exports = function (results, config) {
 
 				var position = mapSource({source:file, line:message.line, column: message.column});
 
-				str += fail(getMessageType(message, rules).toLocaleUpperCase()) + ' at ';
+				str += fail(getMessageType(message).toLocaleUpperCase()) + ' at ';
 				if (position.source.slice(0, dataUrlPrefix.length).toLowerCase() === dataUrlPrefix) {
 					str += position.source;
 				}
