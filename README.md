@@ -20,6 +20,12 @@ This reporter is tested and actively used in WebStorm with [eslint-grunt](https:
 $FILE_PATH$[ \t]*[:;,\[\(\{<]$LINE$(?:[:;,\.]$COLUMN$)?.*
 ````
 
+### Sublime Text
+
+CMD+click on files in [iTerm](https://www.iterm2.com/) should open files at the correct line when iTerm's Semantic History is set up to open files in Sublime Text.
+
+See configuration instructions below.
+
 ## Usage
 
 Install from NPM
@@ -80,6 +86,18 @@ require('eslint-path-formatter').color(false);
 ````js
 require('eslint-path-formatter').options.sourcemap = false;
 ````
+
+### Output line numbers for Sublime Text
+
+```js
+require('eslint-path-formatter').editor('sublime');
+```
+
+This way, the reporter will output messages in this format:
+
+```
+path/to/file.js:line:char
+```
 
 ## Example output
 
