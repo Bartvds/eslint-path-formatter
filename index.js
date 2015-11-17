@@ -227,5 +227,5 @@ module.exports.color = function (enable) {
 	options.style = enable ? 'ansi' : false;
 };
 module.exports.editor = function(editor) {
-	options.editor = (editor == 'sublime') ? 'sublime' : 'webstorm';
+	options.editor = (editor === 'sublime') ? 'sublime' : 'webstorm';
 };
