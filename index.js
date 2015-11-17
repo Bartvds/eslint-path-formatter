@@ -226,6 +226,6 @@ module.exports.options = options;
 module.exports.color = function (enable) {
 	options.style = enable ? 'ansi' : false;
 };
-module.exports.editor: function(editor) {
+module.exports.editor = function(editor) {
 	options.editor = (editor == 'sublime') ? 'sublime' : 'webstorm';
 };
