@@ -1,4 +1,4 @@
-:warning: DEPRECATED
+#### :warning: DEPRECATED
 
 This project isn't maintained anymore.
 
