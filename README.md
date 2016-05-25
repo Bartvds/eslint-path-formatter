@@ -1,3 +1,9 @@
+:warning: DEPRECATED
+
+This project isn't maintained anymore.
+
+Please use this friendly formatter instead: https://github.com/royriojas/eslint-friendly-formatter
+
 # eslint-path-formatter
 
 [![Build Status](https://secure.travis-ci.org/Bartvds/eslint-path-formatter.png?branch=master)](http://travis-ci.org/Bartvds/eslint-path-formatter) [![Dependency Status](https://gemnasium.com/Bartvds/eslint-path-formatter.png)](https://gemnasium.com/Bartvds/eslint-path-formatter) [![NPM version](https://badge.fury.io/js/eslint-path-formatter.png)](http://badge.fury.io/js/eslint-path-formatter)
