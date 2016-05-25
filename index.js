@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var SourceMapConsumer = require('source-map').SourceMapConsumer;
 
-var options = {style: 'ansi', sourcemap:true};
+var options = {style: 'ansi', sourcemap: true, editor: 'webstorm'};
 // copied colors from color.js
 var colorWrap = {
 	//grayscale
@@ -186,7 +186,12 @@ module.exports = function (results) {
 					str += path.resolve(position.source);
 				}
 				if (typeof position.column !== 'undefined') {
-					str += '(' + position.line + ',' + position.column + '):';
+					if (options.editor === 'webstorm') {
+						str += '(' + position.line + ',' + position.column + '):';
+					}
+					if (options.editor === 'sublime') {
+						str += ':' + position.line + ':' + position.column;
+					}
 				}
 				if (typeof message.ruleId !== 'undefined') {
 					str += '\n' + warn('[' +  message.ruleId + '] ');
@@ -220,4 +225,7 @@ module.exports = function (results) {
 module.exports.options = options;
 module.exports.color = function (enable) {
 	options.style = enable ? 'ansi' : false;
+};
+module.exports.editor = function(editor) {
+	options.editor = (editor === 'sublime') ? 'sublime' : 'webstorm';
 };
