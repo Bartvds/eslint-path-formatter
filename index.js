@@ -180,13 +180,13 @@ module.exports = function (results) {
 
 				str += fail(getMessageType(message).toLocaleUpperCase()) + ' at ';
 				if (position.source.slice(0, dataUrlPrefix.length).toLowerCase() === dataUrlPrefix) {
-					str += position.source;
+					str += path.relative('../../../../', position.source.split(',')[1]);
 				}
 				else {
 					str += path.resolve(position.source);
 				}
 				if (typeof position.column !== 'undefined') {
-					str += '(' + position.line + ',' + position.column + '):';
+					str += ':' + position.line + ':' + position.column;
 				}
 				if (typeof message.ruleId !== 'undefined') {
 					str += '\n' + warn('[' +  message.ruleId + '] ');
