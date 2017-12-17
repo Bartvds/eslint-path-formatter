@@ -180,7 +180,7 @@ module.exports = function (results) {
 
 				str += fail(getMessageType(message).toLocaleUpperCase()) + ' at ';
 				if (position.source.slice(0, dataUrlPrefix.length).toLowerCase() === dataUrlPrefix) {
-					str += position.source;
+					str += path.relative('../../../../', position.source.split(',')[1]);
 				}
 				else {
 					str += path.resolve(position.source);
