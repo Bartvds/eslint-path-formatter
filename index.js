@@ -186,7 +186,7 @@ module.exports = function (results) {
 					str += path.resolve(position.source);
 				}
 				if (typeof position.column !== 'undefined') {
-					str += '(' + position.line + ',' + position.column + '):';
+					str += ':' + position.line + ':' + position.column;
 				}
 				if (typeof message.ruleId !== 'undefined') {
 					str += '\n' + warn('[' +  message.ruleId + '] ');
